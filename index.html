@@ -76,22 +76,23 @@
             background: none;
             border: none;
             color: #65676b;
-            font-size: 0.82em;
+            font-size: 0.85em;
             cursor: pointer;
             text-decoration: underline;
-            padding: 0;
+            padding: 4px 0;
             margin-bottom: 12px;
-            display: inline-block;
+            display: block;
+            font-weight: 600;
         }
         .hint-toggle-btn:hover { color: #1877f2; }
 
         .logic-hint {
-            display: none; /* Приховано за замовчуванням */
+            display: none;
             background-color: #eef7fc;
             border-left: 4px solid #1877f2;
             padding: 10px 12px;
             margin-bottom: 15px;
-            font-size: 0.85em;
+            font-size: 0.88em;
             color: #333;
             border-radius: 0 8px 8px 0;
             line-height: 1.4;
@@ -192,7 +193,7 @@
     <div class="card" id="quiz-card">
         <div class="translation" id="ua-text">Завантаження тем...</div>
         
-        <button class="hint-toggle-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
+        <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
         <div class="logic-hint" id="logic-text">Підказка...</div>
 
         <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
@@ -319,10 +320,11 @@
             const item = sentences[index];
             document.getElementById('ua-text').innerText = (index + 1) + " / " + sentences.length + ". " + item.ua;
             
-            // Налаштування та ховання підказки
+            // Підтримка обох ключів: і logic, і hint
+            const hintContent = item.logic || item.hint || "Підказка відсутня.";
             const hintBox = document.getElementById('logic-text');
-            hintBox.innerText = "💡 Логіка Muttersprachler: " + item.logic;
-            hintBox.style.display = 'none'; // Сховати для нового речення
+            hintBox.innerText = "💡 Логіка Muttersprachler: " + hintContent;
+            hintBox.style.display = 'none'; // Приховано за замовчуванням
 
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
@@ -402,7 +404,7 @@
         function restoreQuizCardUI() {
             document.getElementById('quiz-card').innerHTML = `
                 <div class="translation" id="ua-text">Переклад...</div>
-                <button class="hint-toggle-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
+                <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
                 <div class="logic-hint" id="logic-text">Підказка...</div>
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
                 <div class="drop-zone" id="answer-zone"></div>
