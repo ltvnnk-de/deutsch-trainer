@@ -1,0 +1,67 @@
+[
+  {
+    "title": "1. Вступ (Порядок слів)",
+    "data": [
+      {
+        "ua": "Я залишаюся вдома, тому що надворі йде дощ.",
+        "de": "Ich bleibe zu Hause, weil es draußen regnet.",
+        "logic": "WEIL відправляє змінюване дієслово (regnet) у кінець."
+      },
+      {
+        "ua": "Я втомлений, тому я йду раніше спати.",
+        "de": "Ich bin müde, deshalb gehe ich früher schlafen.",
+        "logic": "DESHALB стоїть на 1-й позиції, тому дієслово (gehe) на 2-й."
+      }
+    ]
+  },
+  {
+    "title": "2. До лікаря",
+    "data": [
+      {
+        "ua": "Я телефоную в праксис, тому що мені потрібен термін.",
+        "de": "Ich rufe in der Praxis an, weil ich einen Arzttermin brauche.",
+        "logic": "WEIL відправляє brauche в кінець."
+      },
+      {
+        "ua": "У мене болить голова, тому я купую ліки.",
+        "de": "Ich habe Kopfschmerzen, deshalb kaufe ich Medikamente in der Apotheke.",
+        "logic": "DESHALB -> дієслово kaufe на 2-му місці."
+      }
+    ]
+  },
+  {
+    "title": "3. Покупки (um...zu)",
+    "data": [
+      {
+        "ua": "Я йду в супермаркет, щоб купити свіжі продукти.",
+        "de": "Ich gehe in den Supermarkt, um frische Lebensmittel zu kaufen.",
+        "logic": "Конструкція UM ... ZU: um відкриває мету, zu kaufen замикає її наприкінці."
+      },
+      {
+        "ua": "Вона порівнює ціни, щоб заощадити гроші.",
+        "de": "Sie vergleicht die Preise, um Geld zu sparen.",
+        "logic": "um ставить кому, zu sparen стоїть наприкінці."
+      }
+    ]
+  },
+  {
+    "title": "4. Тема 4",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
+  },
+  {
+    "title": "5. Тема 5",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
+  }
+]
