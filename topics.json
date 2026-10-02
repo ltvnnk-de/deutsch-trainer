@@ -1,52 +1,157 @@
 [
   {
-    "ua": "Я йду в супермаркет, щоб купити свіжі продукти.",
-    "de": "Ich gehe in den Supermarkt, um frische Lebensmittel zu kaufen.",
-    "logic": "Конструкція UM ... ZU: um відкриває мету, а zu kaufen (zu + інфінітив) замикає її наприкінці."
+    "title": "1. Вступ (Порядок слів)",
+    "data": [
+      {
+        "ua": "Я залишаюся вдома, тому що надворі йде дощ.",
+        "de": "Ich bleibe zu Hause, weil es draußen regnet.",
+        "logic": "WEIL відправляє змінюване дієслово (regnet) у кінець."
+      },
+      {
+        "ua": "Я втомлений, тому я йду раніше спати.",
+        "de": "Ich bin müde, deshalb gehe ich früher schlafen.",
+        "logic": "DESHALB стоїть на 1-й позиції, тому дієслово (gehe) на 2-й."
+      }
+    ]
   },
   {
-    "ua": "Ми беремо кошик для покупок, щоб скласти всі товари.",
-    "de": "Wir nehmen einen Einkaufswagen, um alle Waren hineinzulegen.",
-    "logic": "У дієслова hineinlegen префікс hinein- є відокремлюваним, тому zu вклинюється всередину: hineinzulegen."
+    "title": "2. До лікаря",
+    "data": [
+      {
+        "ua": "Я телефоную в праксис, тому що мені потрібен термін.",
+        "de": "Ich rufe in der Praxis an, weil ich einen Arzttermin brauche.",
+        "logic": "WEIL відправляє brauche в кінець."
+      },
+      {
+        "ua": "У мене болить голова, тому я купую ліки.",
+        "de": "Ich habe Kopfschmerzen, deshalb kaufe ich Medikamente in der Apotheke.",
+        "logic": "DESHALB -> дієслово kaufe на 2-му місці."
+      }
+    ]
   },
   {
-    "ua": "Вона порівнює ціни, щоб заощадити гроші.",
-    "de": "Sie vergleicht die Preise, um Geld zu sparen.",
-    "logic": "um ставить кому і відкриває конструкцію мети, zu sparen стоїть на самомуприкінці."
+    "title": "3. Покупки (um...zu)",
+    "data": [
+      {
+        "ua": "Я йду в супермаркет, щоб купити свіжі продукти.",
+        "de": "Ich gehe in den Supermarkt, um frische Lebensmittel zu kaufen.",
+        "logic": "Конструкція UM ... ZU: um відкриває мету, а zu kaufen (zu + інфінітив) замикає її наприкінці."
+      },
+      {
+        "ua": "Ми беремо кошик для покупок, щоб скласти всі товари.",
+        "de": "Wir nehmen einen Einkaufswagen, um alle Waren hineinzulegen.",
+        "logic": "У дієслова hineinlegen префікс hinein- є відокремлюваним, тому zu вклинюється всередину: hineinzulegen."
+      },
+      {
+        "ua": "Вона порівнює ціни, щоб заощадити гроші.",
+        "de": "Sie vergleicht die Preise, um Geld zu sparen.",
+        "logic": "um ставить кому і відкриває конструкцію мети, zu sparen стоїть на самомуприкінці."
+      },
+      {
+        "ua": "Я беру з собою багаторазову сумку, щоб не купувати пластиковий пакет.",
+        "de": "Ich nehme eine Stofftasche mit, um keine Plastiktüte zu kaufen.",
+        "logic": "um ... keine Plastiktüte ... zu kaufen. Заперечення keine стоїть перед іменником."
+      },
+      {
+        "ua": "Клієнт іде до каси, щоб оплатити покупки.",
+        "de": "Der Kunde geht zur Kasse, um die Einkäufe zu bezahlen.",
+        "logic": "Дієслово bezahlen має невідокремлюваний префікс be-, тому zu стоїть окремим словом: zu bezahlen."
+      },
+      {
+        "ua": "Мій брат робить список покупок, щоб нічого не забути.",
+        "de": "Mein Bruder macht einen Einkaufszettel, um nichts zu vergessen.",
+        "logic": "um -> додаток/займенник (nichts) -> zu + інфінітив (zu vergessen) у самому кінці."
+      },
+      {
+        "ua": "Вона йде в пекарню, щоб купити свіжий хліб.",
+        "de": "Sie geht in die Bäckerei, um frisches Brot zu kaufen.",
+        "logic": "Конструкція мети без підмета: um frisches Brot zu kaufen."
+      },
+      {
+        "ua": "Я встаю рано вранці, щоб зробити покупки без черги.",
+        "de": "Ich stehe früh auf, um ohne Schlange einzukaufen.",
+        "logic": "Відокремлюване дієслово einkaufen: частка zu вклинюється між префіксом і коренем (einzukaufen)."
+      },
+      {
+        "ua": "Ми шукаємо знижки, щоб платити менше.",
+        "de": "Wir suchen nach Rabatten, um weniger zu bezahlen.",
+        "logic": "um weniger zu bezahlen — стандартна логіка UM...ZU."
+      },
+      {
+        "ua": "Він показує дисконтну картку, щоб отримати бонуси.",
+        "de": "Er zeigt die Kundenkarte, um Bonuspunkte zu bekommen.",
+        "logic": "um відкриває підрядну частину мети, zu bekommen стоїть у самому кінці."
+      }
+    ]
   },
   {
-    "ua": "Я беру з собою багаторазову сумку, щоб не купувати пластиковий пакет.",
-    "de": "Ich nehme eine Stofftasche mit, um keine Plastiktüte zu kaufen.",
-    "logic": "um ... keine Plastiktüte ... zu kaufen. Заперечення keine стоїть перед іменником."
+    "title": "4. Тема 4",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Клієнт іде до каси, щоб оплатити покупки.",
-    "de": "Der Kunde geht zur Kasse, um die Einkäufe zu bezahlen.",
-    "logic": "Дієслово bezahlen має невідокремлюваний префікс be-, тому zu стоїть окремим словом: zu bezahlen."
+    "title": "5. Тема 5",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Мій брат робить список покупок, щоб нічого не забути.",
-    "de": "Mein Bruder macht einen Einkaufszettel, um nichts zu vergessen.",
-    "logic": "um -> додаток/займенник (nichts) -> zu + інфінітив (zu vergessen) у самому кінці."
+    "title": "6. Тема 6",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Вона йде в пекарню, щоб купити свіжий хліб.",
-    "de": "Sie geht in die Bäckerei, um frisches Brot zu kaufen.",
-    "logic": "Конструкція мети без підмета: um frisches Brot zu kaufen."
+    "title": "7. Тема 7",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Я встаю рано вранці, щоб зробити покупки без черги.",
-    "de": "Ich stehe früh auf, um ohne Schlange einzukaufen.",
-    "logic": "Відокремлюване дієслово einkaufen: частка zu вклинюється між префіксом і коренем (einzukaufen)."
+    "title": "8. Тема 8",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Ми шукаємо знижки, щоб платити менше.",
-    "de": "Wir suchen nach Rabatten, um weniger zu bezahlen.",
-    "logic": "um weniger zu bezahlen — стандартна логіка UM...ZU."
+    "title": "9. Тема 9",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   },
   {
-    "ua": "Він показує дисконтну картку, щоб отримати бонуси.",
-    "de": "Er zeigt die Kundenkarte, um Bonuspunkte zu bekommen.",
-    "logic": "um відкриває підрядну частину мети, zu bekommen стоїть у самому кінці."
+    "title": "10. Тема 10",
+    "data": [
+      {
+        "ua": "Вставте нові речення сюди",
+        "de": "Fügen Sie neue Sätze hier ein",
+        "logic": "Підказка"
+      }
+    ]
   }
 ]
