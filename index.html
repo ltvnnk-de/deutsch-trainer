@@ -70,15 +70,33 @@
             color: #1877f2;
             margin-bottom: 10px;
         }
+        
+        /* Кнопка та блок підказки */
+        .hint-toggle-btn {
+            background: none;
+            border: none;
+            color: #65676b;
+            font-size: 0.82em;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .hint-toggle-btn:hover { color: #1877f2; }
+
         .logic-hint {
+            display: none; /* Приховано за замовчуванням */
             background-color: #eef7fc;
             border-left: 4px solid #1877f2;
-            padding: 10px;
+            padding: 10px 12px;
             margin-bottom: 15px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #333;
             border-radius: 0 8px 8px 0;
+            line-height: 1.4;
         }
+
         .drop-zone {
             min-height: 55px;
             border: 2px dashed #bec3c9;
@@ -173,6 +191,8 @@
 
     <div class="card" id="quiz-card">
         <div class="translation" id="ua-text">Завантаження тем...</div>
+        
+        <button class="hint-toggle-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
         <div class="logic-hint" id="logic-text">Підказка...</div>
 
         <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
@@ -251,6 +271,15 @@
             }
         }
 
+        function toggleHint() {
+            const hint = document.getElementById('logic-text');
+            if (hint.style.display === 'block') {
+                hint.style.display = 'none';
+            } else {
+                hint.style.display = 'block';
+            }
+        }
+
         function renderMenu() {
             const menu = document.getElementById('topics-menu');
             menu.innerHTML = "";
@@ -289,7 +318,12 @@
 
             const item = sentences[index];
             document.getElementById('ua-text').innerText = (index + 1) + " / " + sentences.length + ". " + item.ua;
-            document.getElementById('logic-text').innerText = "💡 Логіка Muttersprachler: " + item.logic;
+            
+            // Налаштування та ховання підказки
+            const hintBox = document.getElementById('logic-text');
+            hintBox.innerText = "💡 Логіка Muttersprachler: " + item.logic;
+            hintBox.style.display = 'none'; // Сховати для нового речення
+
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
@@ -368,6 +402,7 @@
         function restoreQuizCardUI() {
             document.getElementById('quiz-card').innerHTML = `
                 <div class="translation" id="ua-text">Переклад...</div>
+                <button class="hint-toggle-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
                 <div class="logic-hint" id="logic-text">Підказка...</div>
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
                 <div class="drop-zone" id="answer-zone"></div>
