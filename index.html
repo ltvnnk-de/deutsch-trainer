@@ -71,7 +71,6 @@
             margin-bottom: 10px;
         }
         
-        /* Кнопка та блок підказки */
         .hint-toggle-btn {
             background: none;
             border: none;
@@ -161,6 +160,27 @@
         }
         .success { color: #42b72a; }
         .error { color: #fa3e3e; }
+
+        /* Стилі для фінальної розповіді */
+        .story-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            margin-top: 15px;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+        .story-sentence {
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .story-sentence:hover {
+            background-color: #e2e6ea;
+            color: #1877f2;
+        }
 
         #admin-panel {
             display: none;
@@ -273,7 +293,7 @@
                 if (pass === ADMIN_PASSWORD) {
                     isAdminLoggedIn = true;
                     adminPanel.style.display = 'block';
-                    alert("Авторизовано! Тепер ви можете редагувати будь-яку тему онлайн.");
+                    alert("Авторизовано!");
                 } else if (pass !== null) {
                     alert("Невірний пароль!");
                 }
@@ -282,11 +302,7 @@
 
         function toggleHint() {
             const hint = document.getElementById('logic-text');
-            if (hint.style.display === 'block') {
-                hint.style.display = 'none';
-            } else {
-                hint.style.display = 'block';
-            }
+            hint.style.display = (hint.style.display === 'block') ? 'none' : 'block';
         }
 
         function renderMenu() {
@@ -317,27 +333,21 @@
             const sentences = topics[currentTopicIdx].data;
 
             if (index >= sentences.length) {
-                document.getElementById('quiz-card').innerHTML = `
-                    <h2>Тему пройдено! 🎉</h2>
-                    <p>Ви успішно завершили тему: <strong>${topics[currentTopicIdx].title}</strong></p>
-                    <button class='action-btn check-btn' onclick='restartTopic()'>Пройти знову</button>
-                `;
+                renderFullStoryView();
                 return;
             }
 
             const item = sentences[index];
             document.getElementById('ua-text').innerText = (index + 1) + " / " + sentences.length + ". " + item.ua;
             
-            // Підтримка обох ключів: і logic, і hint
             const hintContent = item.logic || item.hint || "Підказка відсутня.";
             const hintBox = document.getElementById('logic-text');
             hintBox.innerText = "💡 Логіка Muttersprachler: " + hintContent;
-            hintBox.style.display = 'none'; // Приховано за замовчуванням
+            hintBox.style.display = 'none';
 
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
-            // Блокування кнопки "Назад", якщо це перше речення
             const prevBtn = document.getElementById('prev-btn');
             if (prevBtn) {
                 prevBtn.disabled = (index === 0);
@@ -361,6 +371,34 @@
             });
         }
 
+        function renderFullStoryView() {
+            const sentences = topics[currentTopicIdx].data;
+            const fullText = sentences.map(s => s.de).join(" ");
+
+            let storyHTML = `<div class="story-container">`;
+            sentences.forEach((s, i) => {
+                storyHTML += `<span class="story-sentence" onclick="speakGerman('${s.de.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${s.de} </span>`;
+            });
+            storyHTML += `</div>`;
+
+            document.getElementById('quiz-card').innerHTML = `
+                <h2>Тему пройдено! 🎉</h2>
+                <p>Ви успішно склали всі речення теми: <strong>${topics[currentTopicIdx].title}</strong></p>
+                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
+                
+                <h3>📖 Повний текст розповіді:</h3>
+                <p style="font-size:0.85em; color:#666;">Натисніть на окреме речення або на кнопку нижче, щоб прослухати повністю:</p>
+                
+                ${storyHTML}
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class='action-btn speak-btn' onclick="speakGerman('${fullText.replace(/'/g, "\\'")}')">🔊 Прослухати весь текст</button>
+                    <button class='action-btn reset-btn' onclick="stopAudio()">⏹ Stop</button>
+                    <button class='action-btn check-btn' onclick='restartTopic()'>Пройти знову</button>
+                </div>
+            `;
+        }
+
         function playCurrentAudio() {
             const correctSentence = topics[currentTopicIdx].data[currentIndex].de;
             speakGerman(correctSentence);
@@ -368,13 +406,19 @@
 
         function speakGerman(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Зупиняємо попереднє озвучення
+                window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'de-DE';
-                utterance.rate = 0.85; // Трохи уповільнений темп для комфортного слухання
+                utterance.rate = 0.85;
                 window.speechSynthesis.speak(utterance);
             } else {
                 alert("Ваш браузер не підтримує стандартне озвучення тексту.");
+            }
+        }
+
+        function stopAudio() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
             }
         }
 
@@ -495,7 +539,7 @@
                     renderMenu();
                     restoreQuizCardUI();
                     loadSentence(0);
-                    alert("Зміни успішно збережено онлайн! Усі користувачі бачитимуть оновлену тему.");
+                    alert("Зміни успішно збережено онлайн!");
                 } else {
                     alert("Помилка збереження на сервер.");
                 }
