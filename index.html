@@ -127,6 +127,13 @@
             border: 1px solid #b2d5ff;
             touch-action: manipulation;
         }
+        
+        /* Кольори для родів іменників */
+        .word-btn.gender-m { background-color: #e3f2fd; color: #0d47a1; border-color: #90caf9; } /* Чоловічий - Синій */
+        .word-btn.gender-f { background-color: #fce4ec; color: #880e4f; border-color: #f48fb1; } /* Жіночий - Рожевий */
+        .word-btn.gender-n { background-color: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; } /* Середній - Зелений */
+        .word-btn.gender-p { background-color: #fff3e0; color: #e65100; border-color: #ffcc80; } /* Множина - Помаранчевий */
+
         .word-btn:active { transform: scale(0.96); }
         .controls {
             display: flex;
@@ -161,7 +168,6 @@
         .success { color: #42b72a; }
         .error { color: #fa3e3e; }
 
-        /* Стилі для фінальної розповіді */
         .story-container {
             background-color: #f8f9fa;
             padding: 15px;
@@ -180,6 +186,25 @@
         .story-sentence:hover {
             background-color: #e2e6ea;
             color: #1877f2;
+        }
+
+        /* Легенда кольорів */
+        .gender-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
         }
 
         #admin-panel {
@@ -221,6 +246,14 @@
         
         <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
         <div class="logic-hint" id="logic-text">Підказка...</div>
+
+        <!-- Легенда родів -->
+        <div class="gender-legend">
+            <div class="legend-item"><div class="legend-box" style="background:#e3f2fd; border:1px solid #90caf9;"></div> der (ч.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#fce4ec; border:1px solid #f48fb1;"></div> die (ж.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#e8f5e9; border:1px solid #a5d6a7;"></div> das (с.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#fff3e0; border:1px solid #ffcc80;"></div> die (мн.)</div>
+        </div>
 
         <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
         <div class="drop-zone" id="answer-zone"></div>
@@ -329,6 +362,19 @@
             loadSentence(0);
         }
 
+        // Парсинг тегів роду: "[m:Pass]" -> word: "Pass", gender: "m"
+        function parseWordWithGender(rawWord) {
+            const match = rawWord.match(/^\[(m\vert{}f\vert{}n\vert{}p):(.*)\]$/);
+            if (match) {
+                return { word: match[2], gender: match[1] };
+            }
+            return { word: rawWord, gender: 'none' };
+        }
+
+        function getCleanSentenceText(item) {
+            return item.de.replace(/\[(m\vert{}f\vert{}n\vert{}p):(.*?)\]/g, '$2');
+        }
+
         function loadSentence(index) {
             const sentences = topics[currentTopicIdx].data;
 
@@ -356,28 +402,30 @@
             selectedWords = [];
             renderAnswerZone();
 
-            let words = item.de.split(" ");
-            words = shuffleArray(words);
+            let rawWords = item.de.split(" ");
+            let parsedWords = rawWords.map(w => parseWordWithGender(w));
+            parsedWords = shuffleArray(parsedWords);
 
             const wordsZone = document.getElementById('words-zone');
             wordsZone.innerHTML = "";
-            words.forEach((word, idx) => {
+            parsedWords.forEach((itemObj, idx) => {
                 const btn = document.createElement('div');
-                btn.className = 'word-btn';
-                btn.innerText = word;
+                btn.className = 'word-btn' + (itemObj.gender !== 'none' ? ' gender-' + itemObj.gender : '');
+                btn.innerText = itemObj.word;
                 btn.id = 'word-' + idx;
-                btn.onclick = () => selectWord(word, 'word-' + idx);
+                btn.onclick = () => selectWord(itemObj, 'word-' + idx);
                 wordsZone.appendChild(btn);
             });
         }
 
         function renderFullStoryView() {
             const sentences = topics[currentTopicIdx].data;
-            const fullText = sentences.map(s => s.de).join(" ");
+            const fullText = sentences.map(s => getCleanSentenceText(s)).join(" ");
 
             let storyHTML = `<div class="story-container">`;
-            sentences.forEach((s, i) => {
-                storyHTML += `<span class="story-sentence" onclick="speakGerman('${s.de.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${s.de} </span>`;
+            sentences.forEach((s) => {
+                const cleanText = getCleanSentenceText(s);
+                storyHTML += `<span class="story-sentence" onclick="speakGerman('${cleanText.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${cleanText} </span>`;
             });
             storyHTML += `</div>`;
 
@@ -400,8 +448,8 @@
         }
 
         function playCurrentAudio() {
-            const correctSentence = topics[currentTopicIdx].data[currentIndex].de;
-            speakGerman(correctSentence);
+            const cleanText = getCleanSentenceText(topics[currentTopicIdx].data[currentIndex]);
+            speakGerman(cleanText);
         }
 
         function speakGerman(text) {
@@ -422,10 +470,10 @@
             }
         }
 
-        function selectWord(word, elementId) {
+        function selectWord(itemObj, elementId) {
             const btn = document.getElementById(elementId);
             if (btn.style.visibility === 'hidden') return;
-            selectedWords.push({ word, elementId });
+            selectedWords.push({ itemObj, elementId });
             btn.style.visibility = 'hidden';
             renderAnswerZone();
         }
@@ -441,8 +489,8 @@
             answerZone.innerHTML = "";
             selectedWords.forEach((item, idx) => {
                 const btn = document.createElement('div');
-                btn.className = 'word-btn';
-                btn.innerText = item.word;
+                btn.className = 'word-btn' + (item.itemObj.gender !== 'none' ? ' gender-' + item.itemObj.gender : '');
+                btn.innerText = item.itemObj.word;
                 btn.onclick = () => unselectWord(idx);
                 answerZone.appendChild(btn);
             });
@@ -451,8 +499,8 @@
         function resetCurrentSentence() { loadSentence(currentIndex); }
 
         function checkAnswer() {
-            const userSentence = selectedWords.map(w => w.word).join(" ");
-            const correctSentence = topics[currentTopicIdx].data[currentIndex].de;
+            const userSentence = selectedWords.map(w => w.itemObj.word).join(" ");
+            const correctSentence = getCleanSentenceText(topics[currentTopicIdx].data[currentIndex]);
             const resMsg = document.getElementById('result-msg');
 
             if (userSentence === correctSentence) {
@@ -488,6 +536,12 @@
                 <div class="translation" id="ua-text">Переклад...</div>
                 <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
                 <div class="logic-hint" id="logic-text">Підказка...</div>
+                <div class="gender-legend">
+                    <div class="legend-item"><div class="legend-box" style="background:#e3f2fd; border:1px solid #90caf9;"></div> der (ч.р.)</div>
+                    <div class="legend-item"><div class="legend-box" style="background:#fce4ec; border:1px solid #f48fb1;"></div> die (ж.р.)</div>
+                    <div class="legend-item"><div class="legend-box" style="background:#e8f5e9; border:1px solid #a5d6a7;"></div> das (с.р.)</div>
+                    <div class="legend-item"><div class="legend-box" style="background:#fff3e0; border:1px solid #ffcc80;"></div> die (мн.)</div>
+                </div>
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
                 <div class="drop-zone" id="answer-zone"></div>
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Слова:</div>
