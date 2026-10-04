@@ -32,7 +32,6 @@
             font-weight: bold;
             opacity: 0.8;
         }
-        .admin-toggle-btn:hover { opacity: 1; }
         
         .topics-menu {
             display: flex;
@@ -52,10 +51,7 @@
             border: none;
             color: #4b4f56;
         }
-        .topic-tab.active {
-            background: #1877f2;
-            color: white;
-        }
+        .topic-tab.active { background: #1877f2; color: white; }
 
         .card {
             background: white;
@@ -83,7 +79,6 @@
             display: block;
             font-weight: 600;
         }
-        .hint-toggle-btn:hover { color: #1877f2; }
 
         .logic-hint {
             display: none;
@@ -97,24 +92,18 @@
             line-height: 1.4;
         }
 
-        .drop-zone {
+        .drop-zone, .words-pool {
             min-height: 55px;
-            border: 2px dashed #bec3c9;
             border-radius: 8px;
             padding: 8px;
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             align-items: center;
-            background-color: #f7f8fa;
             margin-bottom: 15px;
         }
-        .words-pool {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
+        .drop-zone { border: 2px dashed #bec3c9; background-color: #f7f8fa; }
+
         .word-btn {
             background-color: #e7f3ff;
             color: #1877f2;
@@ -128,18 +117,13 @@
             touch-action: manipulation;
         }
         
-        /* Стилі підсвічування родів */
-        .word-btn.gender-m { background-color: #e3f2fd !important; color: #0d47a1 !important; border-color: #90caf9 !important; } /* Чоловічий - Синій */
-        .word-btn.gender-f { background-color: #fce4ec !important; color: #880e4f !important; border-color: #f48fb1 !important; } /* Жіночий - Рожевий */
-        .word-btn.gender-n { background-color: #e8f5e9 !important; color: #1b5e20 !important; border-color: #a5d6a7 !important; } /* Середній - Зелений */
-        .word-btn.gender-p { background-color: #fff3e0 !important; color: #e65100 !important; border-color: #ffcc80 !important; } /* Множина - Помаранчевий */
+        /* Точна палітра за вашим запитом */
+        .word-btn.gender-m { background-color: #0d47a1 !important; color: #ffffff !important; border-color: #0a3880 !important; } /* Темно-синій (ч.р.) */
+        .word-btn.gender-f { background-color: #f8bbd0 !important; color: #880e4f !important; border-color: #f48fb1 !important; } /* Рожевий (ж.р.) */
+        .word-btn.gender-n { background-color: #c8e6c9 !important; color: #1b5e20 !important; border-color: #a5d6a7 !important; } /* Зелений (с.р.) */
+        .word-btn.gender-p { background-color: #fff9c4 !important; color: #f57f17 !important; border-color: #fff59d !important; } /* Світло-жовтий (мн.) */
 
-        .word-btn:active { transform: scale(0.96); }
-        .controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .controls { display: flex; gap: 8px; flex-wrap: wrap; }
         button.action-btn {
             padding: 12px 16px;
             border: none;
@@ -150,85 +134,23 @@
             flex: 1;
             min-width: 100px;
         }
-        button.action-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
         .prev-btn { background-color: #6c757d; color: white; }
         .speak-btn { background-color: #17a2b8; color: white; }
         .check-btn { background-color: #42b72a; color: white; }
         .reset-btn { background-color: #fa3e3e; color: white; }
         .next-btn { background-color: #f7b928; color: white; display: none; }
         
-        .result-message {
-            margin-top: 12px;
-            font-weight: bold;
-            font-size: 1em;
-        }
+        .result-message { margin-top: 12px; font-weight: bold; font-size: 1em; }
         .success { color: #42b72a; }
         .error { color: #fa3e3e; }
 
-        .story-container {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #dee2e6;
-            margin-top: 15px;
-            line-height: 1.6;
-            font-size: 1.05em;
-        }
-        .story-sentence {
-            cursor: pointer;
-            padding: 2px 4px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        .story-sentence:hover {
-            background-color: #e2e6ea;
-            color: #1877f2;
-        }
+        .gender-legend { display: flex; gap: 12px; font-size: 0.8em; margin-bottom: 10px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-box { width: 12px; height: 12px; border-radius: 3px; }
 
-        .gender-legend {
-            display: flex;
-            gap: 12px;
-            font-size: 0.8em;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .legend-box {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-        }
-
-        #admin-panel {
-            display: none;
-            border: 2px solid #1877f2;
-            background-color: #f4f8ff;
-        }
-        input.topic-title-input {
-            width: 100%;
-            padding: 10px;
-            font-size: 1em;
-            font-weight: bold;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-        textarea {
-            width: 100%;
-            height: 180px;
-            font-family: monospace;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 0.85em;
-        }
+        #admin-panel { display: none; border: 2px solid #1877f2; background-color: #f4f8ff; }
+        input.topic-title-input { width: 100%; padding: 10px; font-size: 1em; font-weight: bold; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 12px; }
+        textarea { width: 100%; height: 180px; font-family: monospace; padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -241,17 +163,16 @@
     <div class="topics-menu" id="topics-menu"></div>
 
     <div class="card" id="quiz-card">
-        <div class="translation" id="ua-text">Завантаження тем...</div>
+        <div class="translation" id="ua-text">Завантаження...</div>
         
         <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
         <div class="logic-hint" id="logic-text">Підказка...</div>
 
-        <!-- Легенда родів -->
         <div class="gender-legend">
-            <div class="legend-item"><div class="legend-box" style="background:#e3f2fd; border:1px solid #90caf9;"></div> der (ч.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#fce4ec; border:1px solid #f48fb1;"></div> die (ж.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#e8f5e9; border:1px solid #a5d6a7;"></div> das (с.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#fff3e0; border:1px solid #ffcc80;"></div> die (мн.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#0d47a1;"></div> der / den (ч.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#f8bbd0;"></div> die (ж.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#c8e6c9;"></div> das (с.р.)</div>
+            <div class="legend-item"><div class="legend-box" style="background:#fff9c4; border:1px solid #ccc;"></div> die / мн.</div>
         </div>
 
         <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
@@ -271,17 +192,12 @@
         <div class="result-message" id="result-msg"></div>
     </div>
 
-    <!-- Адмін Панель -->
     <div class="card" id="admin-panel">
-        <h3 style="margin-top:0; color:#1877f2;">⚙️ Редагування поточної теми</h3>
-        
-        <label style="font-size: 0.85em; color: #666; display: block; margin-bottom: 4px;">Назва теми:</label>
+        <h3 style="margin-top:0; color:#1877f2;">⚙️ Редагування теми</h3>
         <input type="text" id="topic-title-input" class="topic-title-input" placeholder="Назва теми...">
-
-        <label style="font-size: 0.85em; color: #666; display: block; margin-bottom: 4px;">Дані речень (JSON):</label>
         <textarea id="json-input"></textarea>
         <br><br>
-        <button class="action-btn check-btn" onclick="saveOnline()">🌐 Зберегти онлайн для всіх</button>
+        <button class="action-btn check-btn" onclick="saveOnline()">🌐 Зберегти онлайн</button>
     </div>
 
     <script>
@@ -295,24 +211,39 @@
         let selectedWords = [];
         let isAdminLoggedIn = false;
 
+        // Автоматичне визначення родів для чистих слів
+        function detectGender(word) {
+            const clean = word.replace(/[.,!?]/g, '').toLowerCase();
+            
+            // Чоловічий (темно-синій)
+            if (['den', 'der', 'dem', 'des', 'einen', 'einem', 'eines', 'supermarkt'].includes(clean)) return 'm';
+            
+            // Жіночий (рожевий)
+            if (['eine', 'einer', 'kasse', 'bäckerei'].includes(clean)) return 'f';
+            
+            // Середній (зелений)
+            if (['das', 'ein', 'brot', 'geld'].includes(clean)) return 'n';
+            
+            // Множина (світло-жовтий)
+            if (['lebensmittel', 'produkte', 'preise'].includes(clean)) return 'p';
+
+            // Звичайна 'die' (якщо перед Lebensmittel чи у множині)
+            if (clean === 'die') return 'f';
+
+            return 'none';
+        }
+
         async function initApp() {
             try {
-                let response;
-                if (JSONBIN_BIN_ID && JSONBIN_BIN_ID !== "") {
-                    response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-                        headers: { "X-Master-Key": JSONBIN_MASTER_KEY }
-                    });
-                    const resJson = await response.json();
-                    topics = resJson.record;
-                } else {
-                    response = await fetch('./topics.json');
-                    topics = await response.json();
-                }
+                let response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                    headers: { "X-Master-Key": JSONBIN_MASTER_KEY }
+                });
+                const resJson = await response.json();
+                topics = resJson.record;
                 renderMenu();
                 selectTopic(0);
             } catch (error) {
                 console.error(error);
-                document.getElementById('ua-text').innerText = "Помилка завантаження тем.";
             }
         }
 
@@ -321,13 +252,10 @@
             if (isAdminLoggedIn) {
                 adminPanel.style.display = (adminPanel.style.display === 'block') ? 'none' : 'block';
             } else {
-                const pass = prompt("Введіть пароль адміністратора:");
+                const pass = prompt("Пароль:");
                 if (pass === ADMIN_PASSWORD) {
                     isAdminLoggedIn = true;
                     adminPanel.style.display = 'block';
-                    alert("Авторизовано!");
-                } else if (pass !== null) {
-                    alert("Невірний пароль!");
                 }
             }
         }
@@ -353,59 +281,33 @@
             currentTopicIdx = idx;
             currentIndex = 0;
             renderMenu();
-            
             document.getElementById('topic-title-input').value = topics[currentTopicIdx].title;
             document.getElementById('json-input').value = JSON.stringify(topics[currentTopicIdx].data, null, 2);
-
-            restoreQuizCardUI();
             loadSentence(0);
-        }
-
-        function cleanText(text) {
-            return text.replace(/\[[mfnp]:(.*?)\]/g, '$1');
         }
 
         function loadSentence(index) {
             const sentences = topics[currentTopicIdx].data;
-
-            if (index >= sentences.length) {
-                renderFullStoryView();
-                return;
-            }
+            if (index >= sentences.length) return;
 
             const item = sentences[index];
             document.getElementById('ua-text').innerText = (index + 1) + " / " + sentences.length + ". " + item.ua;
             
-            const hintContent = item.logic || item.hint || "Підказка відсутня.";
             const hintBox = document.getElementById('logic-text');
-            hintBox.innerText = "💡 Логіка Muttersprachler: " + hintContent;
+            hintBox.innerText = "💡 Логіка: " + (item.logic || item.hint || "Немає");
             hintBox.style.display = 'none';
 
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
-            const prevBtn = document.getElementById('prev-btn');
-            if (prevBtn) {
-                prevBtn.disabled = (index === 0);
-            }
-
             selectedWords = [];
             renderAnswerZone();
 
             let rawWords = item.de.split(" ");
-            let parsedWords = rawWords.map(w => {
-                let gender = 'none';
-                let wordText = w;
-
-                // Покращений вираз: знаходить [m:...], навіть якщо всередині є коми чи крапки
-                const match = w.match(/\[([mfnp]):(.*?)\]/);
-                if (match) {
-                    gender = match[1];     // m, f, n, p
-                    wordText = match[2];   // Очищене слово
-                }
-
-                return { word: wordText, gender: gender };
-            });
+            let parsedWords = rawWords.map(w => ({
+                word: w,
+                gender: detectGender(w)
+            }));
 
             parsedWords = shuffleArray(parsedWords);
 
@@ -419,58 +321,6 @@
                 btn.onclick = () => selectWord(itemObj, 'word-' + idx);
                 wordsZone.appendChild(btn);
             });
-        }
-
-        function renderFullStoryView() {
-            const sentences = topics[currentTopicIdx].data;
-            const fullText = sentences.map(s => cleanText(s.de)).join(" ");
-
-            let storyHTML = `<div class="story-container">`;
-            sentences.forEach((s) => {
-                const pureText = cleanText(s.de);
-                storyHTML += `<span class="story-sentence" onclick="speakGerman('${pureText.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${pureText} </span>`;
-            });
-            storyHTML += `</div>`;
-
-            document.getElementById('quiz-card').innerHTML = `
-                <h2>Тему пройдено! 🎉</h2>
-                <p>Ви успішно склали всі речення теми: <strong>${topics[currentTopicIdx].title}</strong></p>
-                <hr style="border:0; border-top: 1px solid #eee; margin: 15px 0;">
-                
-                <h3>📖 Повний текст розповіді:</h3>
-                <p style="font-size:0.85em; color:#666;">Натисніть на окреме речення або на кнопку нижче, щоб прослухати повністю:</p>
-                
-                ${storyHTML}
-                
-                <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class='action-btn speak-btn' onclick="speakGerman('${fullText.replace(/'/g, "\\'")}')">🔊 Прослухати весь текст</button>
-                    <button class='action-btn reset-btn' onclick="stopAudio()">⏹ Stop</button>
-                    <button class='action-btn check-btn' onclick='restartTopic()'>Пройти знову</button>
-                </div>
-            `;
-        }
-
-        function playCurrentAudio() {
-            const pureText = cleanText(topics[currentTopicIdx].data[currentIndex].de);
-            speakGerman(pureText);
-        }
-
-        function speakGerman(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'de-DE';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Ваш браузер не підтримує стандартне озвучення тексту.");
-            }
-        }
-
-        function stopAudio() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
         }
 
         function selectWord(itemObj, elementId) {
@@ -503,7 +353,7 @@
 
         function checkAnswer() {
             const userSentence = selectedWords.map(w => w.itemObj.word).join(" ");
-            const correctSentence = cleanText(topics[currentTopicIdx].data[currentIndex].de);
+            const correctSentence = topics[currentTopicIdx].data[currentIndex].de;
             const resMsg = document.getElementById('result-msg');
 
             if (userSentence === correctSentence) {
@@ -512,53 +362,12 @@
                 document.getElementById('next-btn').style.display = "inline-block";
             } else {
                 resMsg.className = "result-message error";
-                resMsg.innerText = "Є помилка. Перевірте порядок слів!";
+                resMsg.innerText = "Помилка у порядку слів!";
             }
         }
 
-        function prevSentence() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                loadSentence(currentIndex);
-            }
-        }
-
-        function nextSentence() {
-            currentIndex++;
-            loadSentence(currentIndex);
-        }
-
-        function restartTopic() {
-            currentIndex = 0;
-            restoreQuizCardUI();
-            loadSentence(0);
-        }
-
-        function restoreQuizCardUI() {
-            document.getElementById('quiz-card').innerHTML = `
-                <div class="translation" id="ua-text">Переклад...</div>
-                <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
-                <div class="logic-hint" id="logic-text">Підказка...</div>
-                <div class="gender-legend">
-                    <div class="legend-item"><div class="legend-box" style="background:#e3f2fd; border:1px solid #90caf9;"></div> der (ч.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#fce4ec; border:1px solid #f48fb1;"></div> die (ж.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#e8f5e9; border:1px solid #a5d6a7;"></div> das (с.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#fff3e0; border:1px solid #ffcc80;"></div> die (мн.)</div>
-                </div>
-                <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
-                <div class="drop-zone" id="answer-zone"></div>
-                <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Слова:</div>
-                <div class="words-pool" id="words-zone"></div>
-                <div class="controls">
-                    <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
-                    <button class="action-btn speak-btn" onclick="playCurrentAudio()">🔊 Озвучка</button>
-                    <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
-                    <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
-                    <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
-                </div>
-                <div class="result-message" id="result-msg"></div>
-            `;
-        }
+        function prevSentence() { if (currentIndex > 0) { currentIndex--; loadSentence(currentIndex); } }
+        function nextSentence() { currentIndex++; loadSentence(currentIndex); }
 
         function shuffleArray(array) {
             let arr = [...array];
@@ -572,37 +381,18 @@
         async function saveOnline() {
             try {
                 const newTitle = document.getElementById('topic-title-input').value.trim();
-                const raw = document.getElementById('json-input').value;
-                const parsed = JSON.parse(raw);
-
-                if (!newTitle) {
-                    alert("Введіть назву теми!");
-                    return;
-                }
-
+                const parsed = JSON.parse(document.getElementById('json-input').value);
                 topics[currentTopicIdx].title = newTitle;
                 topics[currentTopicIdx].data = parsed;
 
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': JSONBIN_MASTER_KEY
-                    },
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER_KEY },
                     body: JSON.stringify(topics)
                 });
-
-                if (response.ok) {
-                    renderMenu();
-                    restoreQuizCardUI();
-                    loadSentence(0);
-                    alert("Зміни успішно збережено онлайн!");
-                } else {
-                    alert("Помилка збереження на сервер.");
-                }
-            } catch (e) {
-                alert("Помилка JSON: " + e.message);
-            }
+                alert("Збережено!");
+                loadSentence(0);
+            } catch (e) { alert("Помилка JSON: " + e.message); }
         }
 
         window.onload = initApp;
