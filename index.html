@@ -129,10 +129,10 @@
         }
         
         /* Стилі підсвічування родів */
-        .word-btn.gender-m { background-color: #e3f2fd; color: #0d47a1; border-color: #90caf9; } /* Чоловічий - Синій */
-        .word-btn.gender-f { background-color: #fce4ec; color: #880e4f; border-color: #f48fb1; } /* Жіночий - Рожевий */
-        .word-btn.gender-n { background-color: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; } /* Середній - Зелений */
-        .word-btn.gender-p { background-color: #fff3e0; color: #e65100; border-color: #ffcc80; } /* Множина - Помаранчевий */
+        .word-btn.gender-m { background-color: #e3f2fd !important; color: #0d47a1 !important; border-color: #90caf9 !important; } /* Чоловічий - Синій */
+        .word-btn.gender-f { background-color: #fce4ec !important; color: #880e4f !important; border-color: #f48fb1 !important; } /* Жіночий - Рожевий */
+        .word-btn.gender-n { background-color: #e8f5e9 !important; color: #1b5e20 !important; border-color: #a5d6a7 !important; } /* Середній - Зелений */
+        .word-btn.gender-p { background-color: #fff3e0 !important; color: #e65100 !important; border-color: #ffcc80 !important; } /* Множина - Помаранчевий */
 
         .word-btn:active { transform: scale(0.96); }
         .controls {
@@ -361,9 +361,8 @@
             loadSentence(0);
         }
 
-        // Очищення тексту від тегів для правильної перевірки та озвучки
         function cleanText(text) {
-            return text.replace(/\[(m\vert{}f\vert{}n\vert{}p):(.*?)\]/g, '$2');
+            return text.replace(/\[[mfnp]:(.*?)\]/g, '$1');
         }
 
         function loadSentence(index) {
@@ -393,16 +392,16 @@
             selectedWords = [];
             renderAnswerZone();
 
-            // Парсинг тегів [m:слово], [f:слово], [n:слово], [p:слово]
             let rawWords = item.de.split(" ");
             let parsedWords = rawWords.map(w => {
                 let gender = 'none';
                 let wordText = w;
 
-                const match = w.match(/^\[(m\vert{}f\vert{}n\vert{}p):(.*)\]$/);
+                // Покращений вираз: знаходить [m:...], навіть якщо всередині є коми чи крапки
+                const match = w.match(/\[([mfnp]):(.*?)\]/);
                 if (match) {
-                    gender = match[1];     // m, f, n або p
-                    wordText = match[2];   // Очищене слово без дужок
+                    gender = match[1];     // m, f, n, p
+                    wordText = match[2];   // Очищене слово
                 }
 
                 return { word: wordText, gender: gender };
