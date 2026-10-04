@@ -144,6 +144,11 @@
             flex: 1;
             min-width: 100px;
         }
+        button.action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .prev-btn { background-color: #6c757d; color: white; }
         .check-btn { background-color: #42b72a; color: white; }
         .reset-btn { background-color: #fa3e3e; color: white; }
         .next-btn { background-color: #f7b928; color: white; display: none; }
@@ -203,6 +208,7 @@
         <div class="words-pool" id="words-zone"></div>
 
         <div class="controls">
+            <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
             <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
             <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
             <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
@@ -329,6 +335,12 @@
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
 
+            // Блокування кнопки "Назад", якщо це перше речення
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (index === 0);
+            }
+
             selectedWords = [];
             renderAnswerZone();
 
@@ -390,6 +402,13 @@
             }
         }
 
+        function prevSentence() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadSentence(currentIndex);
+            }
+        }
+
         function nextSentence() {
             currentIndex++;
             loadSentence(currentIndex);
@@ -411,6 +430,7 @@
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Слова:</div>
                 <div class="words-pool" id="words-zone"></div>
                 <div class="controls">
+                    <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
                     <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
                     <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
                     <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
