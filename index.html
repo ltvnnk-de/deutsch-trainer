@@ -149,6 +149,7 @@
             cursor: not-allowed;
         }
         .prev-btn { background-color: #6c757d; color: white; }
+        .speak-btn { background-color: #17a2b8; color: white; }
         .check-btn { background-color: #42b72a; color: white; }
         .reset-btn { background-color: #fa3e3e; color: white; }
         .next-btn { background-color: #f7b928; color: white; display: none; }
@@ -209,6 +210,7 @@
 
         <div class="controls">
             <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+            <button class="action-btn speak-btn" onclick="playCurrentAudio()">🔊 Озвучка</button>
             <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
             <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
             <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
@@ -359,6 +361,23 @@
             });
         }
 
+        function playCurrentAudio() {
+            const correctSentence = topics[currentTopicIdx].data[currentIndex].de;
+            speakGerman(correctSentence);
+        }
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Зупиняємо попереднє озвучення
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.85; // Трохи уповільнений темп для комфортного слухання
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Ваш браузер не підтримує стандартне озвучення тексту.");
+            }
+        }
+
         function selectWord(word, elementId) {
             const btn = document.getElementById(elementId);
             if (btn.style.visibility === 'hidden') return;
@@ -396,6 +415,9 @@
                 resMsg.className = "result-message success";
                 resMsg.innerText = "Правильно! Wunderbar! ✨";
                 document.getElementById('next-btn').style.display = "inline-block";
+                
+                // Автоматично озвучуємо речення при правильній відповіді
+                speakGerman(correctSentence);
             } else {
                 resMsg.className = "result-message error";
                 resMsg.innerText = "Є помилка. Перевірте порядок слів!";
@@ -431,6 +453,7 @@
                 <div class="words-pool" id="words-zone"></div>
                 <div class="controls">
                     <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+                    <button class="action-btn speak-btn" onclick="playCurrentAudio()">🔊 Озвучка</button>
                     <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
                     <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
                     <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
