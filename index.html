@@ -128,7 +128,7 @@
             touch-action: manipulation;
         }
         
-        /* Кольори для родів іменників */
+        /* Стилі підсвічування родів */
         .word-btn.gender-m { background-color: #e3f2fd; color: #0d47a1; border-color: #90caf9; } /* Чоловічий - Синій */
         .word-btn.gender-f { background-color: #fce4ec; color: #880e4f; border-color: #f48fb1; } /* Жіночий - Рожевий */
         .word-btn.gender-n { background-color: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; } /* Середній - Зелений */
@@ -188,7 +188,6 @@
             color: #1877f2;
         }
 
-        /* Легенда кольорів */
         .gender-legend {
             display: flex;
             gap: 12px;
@@ -362,17 +361,9 @@
             loadSentence(0);
         }
 
-        // Парсинг тегів роду: "[m:Pass]" -> word: "Pass", gender: "m"
-        function parseWordWithGender(rawWord) {
-            const match = rawWord.match(/^\[(m\vert{}f\vert{}n\vert{}p):(.*)\]$/);
-            if (match) {
-                return { word: match[2], gender: match[1] };
-            }
-            return { word: rawWord, gender: 'none' };
-        }
-
-        function getCleanSentenceText(item) {
-            return item.de.replace(/\[(m\vert{}f\vert{}n\vert{}p):(.*?)\]/g, '$2');
+        // Очищення тексту від тегів для правильної перевірки та озвучки
+        function cleanText(text) {
+            return text.replace(/\[(m\vert{}f\vert{}n\vert{}p):(.*?)\]/g, '$2');
         }
 
         function loadSentence(index) {
@@ -402,8 +393,21 @@
             selectedWords = [];
             renderAnswerZone();
 
+            // Парсинг тегів [m:слово], [f:слово], [n:слово], [p:слово]
             let rawWords = item.de.split(" ");
-            let parsedWords = rawWords.map(w => parseWordWithGender(w));
+            let parsedWords = rawWords.map(w => {
+                let gender = 'none';
+                let wordText = w;
+
+                const match = w.match(/^\[(m\vert{}f\vert{}n\vert{}p):(.*)\]$/);
+                if (match) {
+                    gender = match[1];     // m, f, n або p
+                    wordText = match[2];   // Очищене слово без дужок
+                }
+
+                return { word: wordText, gender: gender };
+            });
+
             parsedWords = shuffleArray(parsedWords);
 
             const wordsZone = document.getElementById('words-zone');
@@ -420,12 +424,12 @@
 
         function renderFullStoryView() {
             const sentences = topics[currentTopicIdx].data;
-            const fullText = sentences.map(s => getCleanSentenceText(s)).join(" ");
+            const fullText = sentences.map(s => cleanText(s.de)).join(" ");
 
             let storyHTML = `<div class="story-container">`;
             sentences.forEach((s) => {
-                const cleanText = getCleanSentenceText(s);
-                storyHTML += `<span class="story-sentence" onclick="speakGerman('${cleanText.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${cleanText} </span>`;
+                const pureText = cleanText(s.de);
+                storyHTML += `<span class="story-sentence" onclick="speakGerman('${pureText.replace(/'/g, "\\'")}')" title="Натисніть, щоб прослухати">${pureText} </span>`;
             });
             storyHTML += `</div>`;
 
@@ -448,8 +452,8 @@
         }
 
         function playCurrentAudio() {
-            const cleanText = getCleanSentenceText(topics[currentTopicIdx].data[currentIndex]);
-            speakGerman(cleanText);
+            const pureText = cleanText(topics[currentTopicIdx].data[currentIndex].de);
+            speakGerman(pureText);
         }
 
         function speakGerman(text) {
@@ -500,7 +504,7 @@
 
         function checkAnswer() {
             const userSentence = selectedWords.map(w => w.itemObj.word).join(" ");
-            const correctSentence = getCleanSentenceText(topics[currentTopicIdx].data[currentIndex]);
+            const correctSentence = cleanText(topics[currentTopicIdx].data[currentIndex].de);
             const resMsg = document.getElementById('result-msg');
 
             if (userSentence === correctSentence) {
