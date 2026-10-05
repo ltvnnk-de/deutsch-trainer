@@ -125,7 +125,7 @@
             touch-action: manipulation;
         }
         
-        /* Ваші кольори родів */
+        /* Кольори родів */
         .word-btn.gender-m { background-color: #0d47a1 !important; color: #ffffff !important; border-color: #0a3880 !important; } /* Темно-синій */
         .word-btn.gender-f { background-color: #f8bbd0 !important; color: #880e4f !important; border-color: #f48fb1 !important; } /* Рожевий */
         .word-btn.gender-n { background-color: #c8e6c9 !important; color: #1b5e20 !important; border-color: #a5d6a7 !important; } /* Зелений */
@@ -170,7 +170,7 @@
         }
         .story-sentence:hover { background-color: #e2e6ea; color: #1877f2; }
 
-        .gender-legend { display: flex; gap: 12px; font-size: 0.8em; margin-bottom: 10px; flex-wrap: wrap; }
+        .gender-legend { display: flex; gap: 12px; font-size: 0.85em; margin-bottom: 10px; flex-wrap: wrap; border-bottom: 1px solid #d0e3f0; padding-bottom: 8px; }
         .legend-item { display: flex; align-items: center; gap: 4px; }
         .legend-box { width: 12px; height: 12px; border-radius: 3px; }
 
@@ -192,14 +192,15 @@
         <div class="translation" id="ua-text">Завантаження тем...</div>
         
         <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
-        <div class="logic-hint" id="logic-text">Підказка...</div>
-
-        <!-- Легенда родів -->
-        <div class="gender-legend">
-            <div class="legend-item"><div class="legend-box" style="background:#0d47a1;"></div> der / den (ч.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#f8bbd0;"></div> die (ж.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#c8e6c9;"></div> das (с.р.)</div>
-            <div class="legend-item"><div class="legend-box" style="background:#fff9c4; border:1px solid #ccc;"></div> die / мн.</div>
+        
+        <div class="logic-hint" id="logic-text">
+            <div class="gender-legend">
+                <div class="legend-item"><div class="legend-box" style="background:#0d47a1;"></div> der / den</div>
+                <div class="legend-item"><div class="legend-box" style="background:#f8bbd0;"></div> die</div>
+                <div class="legend-item"><div class="legend-box" style="background:#c8e6c9;"></div> das</div>
+                <div class="legend-item"><div class="legend-box" style="background:#fff9c4; border:1px solid #ccc;"></div> die (Pl.)</div>
+            </div>
+            <div id="logic-content">Підказка...</div>
         </div>
 
         <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
@@ -298,7 +299,6 @@
             loadSentence(0);
         }
 
-        // Повне вичищення тегів [m:...], [f:...], [n:...], [p:...] для перевірки та аудіо
         function cleanText(text) {
             return text.replace(/\[[mfnp]:(.*?)\]/g, '$1');
         }
@@ -314,9 +314,8 @@
             document.getElementById('ua-text').innerText = (index + 1) + " / " + sentences.length + ". " + item.ua;
             
             const hintContent = item.logic || item.hint || "Підказка відсутня.";
-            const hintBox = document.getElementById('logic-text');
-            hintBox.innerText = "💡 Логіка: " + hintContent;
-            hintBox.style.display = 'none';
+            document.getElementById('logic-content').innerText = "💡 Логіка: " + hintContent;
+            document.getElementById('logic-text').style.display = 'none';
 
             document.getElementById('result-msg').innerText = "";
             document.getElementById('next-btn').style.display = "none";
@@ -332,11 +331,10 @@
                 let gender = 'none';
                 let wordText = w;
 
-                // Витягаємо рід і слово, видаляючи квадратні дужки
                 const match = w.match(/\[([mfnp]):(.*?)\]/);
                 if (match) {
-                    gender = match[1];     // m, f, n або p
-                    wordText = match[2];   // Очищене слово без букв і дужок
+                    gender = match[1];
+                    wordText = match[2];
                 }
 
                 return { word: wordText, gender: gender };
@@ -380,7 +378,7 @@
                 <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class='action-btn speak-btn' onclick="speakGerman('${fullText.replace(/'/g, "\\'")}')">🔊 Прослухати весь текст</button>
                     <button class='action-btn reset-btn' onclick="stopAudio()">⏹ Stop</button>
-                    <button class='action-btn check-btn' onclick='restartTopic()'>Прайди знову</button>
+                    <button class='action-btn check-btn' onclick='restartTopic()'>Пройти знову</button>
                 </div>
             `;
         }
@@ -464,12 +462,14 @@
             document.getElementById('quiz-card').innerHTML = `
                 <div class="translation" id="ua-text">Переклад...</div>
                 <button class="hint-toggle-btn" id="hint-btn" onclick="toggleHint()">🔍 Подивитися підказку</button>
-                <div class="logic-hint" id="logic-text">Підказка...</div>
-                <div class="gender-legend">
-                    <div class="legend-item"><div class="legend-box" style="background:#0d47a1;"></div> der / den (ч.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#f8bbd0;"></div> die (ж.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#c8e6c9;"></div> das (с.р.)</div>
-                    <div class="legend-item"><div class="legend-box" style="background:#fff9c4; border:1px solid #ccc;"></div> die / мн.</div>
+                <div class="logic-hint" id="logic-text">
+                    <div class="gender-legend">
+                        <div class="legend-item"><div class="legend-box" style="background:#0d47a1;"></div> der / den</div>
+                        <div class="legend-item"><div class="legend-box" style="background:#f8bbd0;"></div> die</div>
+                        <div class="legend-item"><div class="legend-box" style="background:#c8e6c9;"></div> das</div>
+                        <div class="legend-item"><div class="legend-box" style="background:#fff9c4; border:1px solid #ccc;"></div> die (Pl.)</div>
+                    </div>
+                    <div id="logic-content">Підказка...</div>
                 </div>
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Ваше речення:</div>
                 <div class="drop-zone" id="answer-zone"></div>
