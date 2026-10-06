@@ -143,11 +143,9 @@
             min-width: 100px;
         }
         button.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .prev-btn { background-color: #6c757d; color: white; }
+        .nav-btn { background-color: #6c757d; color: white; }
         .speak-btn { background-color: #17a2b8; color: white; }
         .check-btn { background-color: #42b72a; color: white; }
-        .reset-btn { background-color: #fa3e3e; color: white; }
-        .next-btn { background-color: #f7b928; color: white; display: none; }
         
         .result-message { margin-top: 12px; font-weight: bold; font-size: 1em; }
         .success { color: #42b72a; }
@@ -210,11 +208,10 @@
         <div class="words-pool" id="words-zone"></div>
 
         <div class="controls">
-            <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+            <button class="action-btn nav-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+            <button class="action-btn nav-btn" id="next-btn" onclick="nextSentence()">Вперед ►</button>
             <button class="action-btn speak-btn" onclick="playCurrentAudio()">🔊 Озвучка</button>
             <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
-            <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
-            <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
         </div>
 
         <div class="result-message" id="result-msg"></div>
@@ -318,10 +315,12 @@
             document.getElementById('logic-text').style.display = 'none';
 
             document.getElementById('result-msg').innerText = "";
-            document.getElementById('next-btn').style.display = "none";
 
             const prevBtn = document.getElementById('prev-btn');
             if (prevBtn) prevBtn.disabled = (index === 0);
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) nextBtn.disabled = (index >= sentences.length - 1);
 
             selectedWords = [];
             renderAnswerZone();
@@ -377,7 +376,7 @@
                 
                 <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class='action-btn speak-btn' onclick="speakGerman('${fullText.replace(/'/g, "\\'")}')">🔊 Прослухати весь текст</button>
-                    <button class='action-btn reset-btn' onclick="stopAudio()">⏹ Stop</button>
+                    <button class='action-btn nav-btn' onclick="stopAudio()">⏹ Stop</button>
                     <button class='action-btn check-btn' onclick='restartTopic()'>Пройти знову</button>
                 </div>
             `;
@@ -432,8 +431,6 @@
             });
         }
 
-        function resetCurrentSentence() { loadSentence(currentIndex); }
-
         function checkAnswer() {
             const userSentence = selectedWords.map(w => w.itemObj.word).join(" ");
             const correctSentence = cleanText(topics[currentTopicIdx].data[currentIndex].de);
@@ -442,15 +439,26 @@
             if (userSentence === correctSentence) {
                 resMsg.className = "result-message success";
                 resMsg.innerText = "Правильно! Wunderbar! ✨";
-                document.getElementById('next-btn').style.display = "inline-block";
             } else {
                 resMsg.className = "result-message error";
                 resMsg.innerText = "Є помилка. Перевірте порядок слів!";
             }
         }
 
-        function prevSentence() { if (currentIndex > 0) { currentIndex--; loadSentence(currentIndex); } }
-        function nextSentence() { currentIndex++; loadSentence(currentIndex); }
+        function prevSentence() { 
+            if (currentIndex > 0) { 
+                currentIndex--; 
+                loadSentence(currentIndex); 
+            } 
+        }
+
+        function nextSentence() { 
+            const sentences = topics[currentTopicIdx].data;
+            if (currentIndex < sentences.length - 1) { 
+                currentIndex++; 
+                loadSentence(currentIndex); 
+            } 
+        }
 
         function restartTopic() {
             currentIndex = 0;
@@ -476,11 +484,10 @@
                 <div style="font-size: 0.85em; color: #666; margin-bottom: 5px;">Слова:</div>
                 <div class="words-pool" id="words-zone"></div>
                 <div class="controls">
-                    <button class="action-btn prev-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+                    <button class="action-btn nav-btn" id="prev-btn" onclick="prevSentence()">◄ Назад</button>
+                    <button class="action-btn nav-btn" id="next-btn" onclick="nextSentence()">Вперед ►</button>
                     <button class="action-btn speak-btn" onclick="playCurrentAudio()">🔊 Озвучка</button>
                     <button class="action-btn check-btn" onclick="checkAnswer()">Перевірити</button>
-                    <button class="action-btn reset-btn" onclick="resetCurrentSentence()">Скинути</button>
-                    <button class="action-btn next-btn" id="next-btn" onclick="nextSentence()">Далі ➔</button>
                 </div>
                 <div class="result-message" id="result-msg"></div>
             `;
